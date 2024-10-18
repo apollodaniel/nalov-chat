@@ -13,8 +13,8 @@ WORKDIR /app
 COPY --from=builder /build/dist ./
 COPY --from=builder /build/node_modules ./node_modules
 COPY --from=builder /build/public ./public
-RUN apt update && apt install imagemagick -y
-COPY ./policy.xml /etc/ImageMagick-6/policy.xml
+RUN apt update && apt install imagemagick-doc enscript gnuplot grads graphviz hp2xx html2ps libwmf-bin povray texlive-base-bin transfig libjxr-tools imagemagick -y
 
+COPY ./policy.xml /etc/ImageMagick-6/policy.xml
 
 CMD [ "node", "index.js"]
