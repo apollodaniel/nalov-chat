@@ -1,0 +1,6 @@
+[submodule "backend/nalov-chat-backend"]
+	path = backend/nalov-chat-backend
+	url = https://github.com/apollodaniel/nalov-chat-backend
+[submodule "web/nalov-chat-frontend"]
+	path = web/nalov-chat-frontend
+	url = https://github.com/apollodaniel/nalov-chat-frontend

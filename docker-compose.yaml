@@ -1,0 +1,40 @@
+services:
+    db:
+        image: sha256:b781f3a53e61df916d97dffe6669ef32b08515327ee3a398087115385b5178f5
+        restart: always
+        shm_size: 128mb
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_PASSWORD: f09986782d6b663980450db7093c5ce5C
+            POSTGRES_USER: chat_admin
+            POSTGRES_DB: chat_app
+            PGDATA: /var/lib/postgresql/data/pgdata
+    backend:
+        build: backend
+        restart: always
+        ports:
+            - '8751:8751'
+            - '8081:8081'
+        depends_on:
+            - db
+        volumes:
+            - ./data/backend/public:/app/public
+            - ./data/backend/files:/app/files
+        environment:
+            PORT: 8751
+            POSTGRES_PASSWORD: f09986782d6b663980450db7093c5ce5C
+            POSTGRES_USER: chat_admin
+            POSTGRES_DB: chat_app
+            POSTGRES_PORT: 5432
+            JWT_REFRESH_TOKEN: fd0d6b4c4858c8121b259209ab1983c5e2d47849c04c7c5c785a7bb543b2f9b8653a30d67f5113075e595729e4ce6fcad02bc1eef9408c2a756df90b848c8578
+            JWT_AUTH_TOKEN: a89795b64ec2a6ae77e961fb82c58f307cf42a90bf5ca12f41fda6a20da808f87fb5f941c41305a15a4b128831abe63357dff685a53bd313999d5e22d910e5bc
+    web:
+        build: web
+        restart: always
+        ports:
+            - "8085:80"
+        depends_on:
+            - backend
