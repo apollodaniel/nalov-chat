@@ -23,9 +23,9 @@ services:
         volumes:
             - ./data/backend/public:/app/public
             - ./data/backend/files:/app/files
-            - './data/backend/public/profile-picture/default.png:/tmp/profile-picture/default.png'
         environment:
             PORT: 8751
+            POSTGRES_HOST: db
             POSTGRES_PASSWORD: f09986782d6b663980450db7093c5ce5C
             POSTGRES_USER: chat_admin
             POSTGRES_DB: chat_app
