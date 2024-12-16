@@ -4,9 +4,10 @@ RUN mkdir /build
 COPY nalov-chat-frontend/ /build
 WORKDIR /build
 
-RUN npm install
-RUN npx vite build
+RUN yarn install
+RUN yarn run vite build
 
-FROM httpd:2.4
-COPY --from=builder /build/dist /usr/local/apache2/htdocs/
-COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+FROM nginx:1.27.3
+
+COPY --from=builder /build/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf

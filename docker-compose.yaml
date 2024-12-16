@@ -5,19 +5,14 @@ services:
         shm_size: 128mb
         volumes:
             - ./data/postgres:/var/lib/postgresql/data
-        ports:
-            - '5432:5432'
         environment:
-            POSTGRES_PASSWORD: f09986782d6b663980450db7093c5ce5C
+            POSTGRES_PASSWORD: e0879b14302d4cae4ddcac3bf7edb037bf723bdc776335cb123688ae660aab47fbfe9504c8c6f8009c5319c3aa947d80bf87a22dd5acbb6dcadf711bef724055
             POSTGRES_USER: chat_admin
             POSTGRES_DB: chat_app
             PGDATA: /var/lib/postgresql/data/pgdata
     backend:
         build: backend
         restart: always
-        ports:
-            - '8751:8751'
-            - '8081:8081'
         depends_on:
             - db
         volumes:
@@ -26,16 +21,17 @@ services:
         environment:
             PORT: 8751
             POSTGRES_HOST: db
-            POSTGRES_PASSWORD: f09986782d6b663980450db7093c5ce5C
+            POSTGRES_PASSWORD: e0879b14302d4cae4ddcac3bf7edb037bf723bdc776335cb123688ae660aab47fbfe9504c8c6f8009c5319c3aa947d80bf87a22dd5acbb6dcadf711bef724055
             POSTGRES_USER: chat_admin
             POSTGRES_DB: chat_app
             POSTGRES_PORT: 5432
-            JWT_REFRESH_TOKEN: fd0d6b4c4858c8121b259209ab1983c5e2d47849c04c7c5c785a7bb543b2f9b8653a30d67f5113075e595729e4ce6fcad02bc1eef9408c2a756df90b848c8578
-            JWT_AUTH_TOKEN: a89795b64ec2a6ae77e961fb82c58f307cf42a90bf5ca12f41fda6a20da808f87fb5f941c41305a15a4b128831abe63357dff685a53bd313999d5e22d910e5bc
+            COOKIES_SECRET: 80c2e80077f42ccea674f1268dbfe480556a4a15c01be337d6cbae773935e0dd5f3a129632655158cad0ca0302b047fc8adbfc42bacea213787167eed690286e
+            JWT_REFRESH_TOKEN: c61ec6505f4bd2c1a92384bb7c0e2ed83df06ff53ae40d9325ee87847a0fb0bec105fac441c611f086e08ad124d7637e34753f334b7700ff8c4c5a1f623a133a
+            JWT_AUTH_TOKEN: 2a0c51b088c137c860cb7a75aa822e87ee2f1e896fe336a1d242941c76c3c2667efc5e177c0a4a77c4e839ad1888760b85f88d8c139b88d2066f3f27c8cfb282
     web:
         build: web
         restart: always
-        ports:
-            - '8085:80'
         depends_on:
             - backend
+        ports:
+            - '8085:8080'
