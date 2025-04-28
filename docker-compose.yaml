@@ -34,4 +34,4 @@ services:
         depends_on:
             - backend
         ports:
-            - '8085:8080'
+            - '8085:8085'
